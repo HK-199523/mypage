@@ -1,0 +1,45 @@
+
+# ベースイメージを指定
+FROM ubuntu:22.04
+
+# 必要なパッケージをインストール
+RUN apt-get update && apt-get install -y \
+    python3.9 \
+    python3-pip \
+    mysql-client \
+    libmysqlclient-dev \
+    pkg-config \
+    mysql-server \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 作業ディレクトリを設定
+WORKDIR /usr/src/app
+
+# ホストOSのrequirements.txtファイルを実行ディレクトリにコピー
+COPY requirements.txt ./
+
+# requirements.txt記載のパッケージをインストール
+RUN pip install -r requirements.txt
+
+# MySQLのインストールと設定
+#RUN /usr/bin/mysqld_safe --skip-grant-tables &
+#RUN sleep 5
+#RUN mysql -e "CREATE DATABASE mydatabase;" && \
+#    mysql -e "CREATE USER 'myuser'@'%' IDENTIFIED BY 'mypassword';" && \
+#    mysql -e "GRANT ALL PRIVILEGES ON mydatabase.* TO 'myuser'@'%';" && \
+#    mysql -e "FLUSH PRIVILEGES;"
+
+# Djangoプロジェクトをコピー
+COPY . /usr/src/app
+
+# Docker内でMySQLサーバーを起動するための設定
+RUN sed -i 's/^bind-address/#&/' /etc/mysql/mysql.conf.d/mysqld.cnf
+RUN service mysql start
+
+# 開放するポートを指定
+EXPOSE 8001
+
+# コンテナが開始されたときにMySQLサーバーが自動的に起動するように設定
+CMD ["mysqld_safe"]
+
