@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,7 +52,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mypage.urls'
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -80,8 +82,12 @@ DATABASES = {
         'NAME': 'mypage_db',  # MySQLのデータベース名
         'USER': 'dbuser',       # MySQLのユーザー名
         'PASSWORD': 'dbpassword',   # MySQLのパスワード
-        'HOST': 'mysql_db-1',          # MySQLのホスト名（Dockerコンテナ名）
+        'HOST': 'mysql_db',          # MySQLのホスト名（Dockerコンテナ名）
         'PORT': '3306',           # MySQLのポート番号
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 

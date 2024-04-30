@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--{% load date_filter %}-->
 {% load static %}
 <html class="no-js" lang="ja">
 <head>
@@ -91,7 +92,30 @@
             </ul>
         </div>
     </section><!-- /.section-topics -->
+    <section>
+        <div id="newsBody" class="row">
+            {% for new in news %}
+                <div class="card rowChild" style="border:none;">
+                    <a href="#" class="Image"><img src="{{ new.image1.url }}"  alt="No Image"></a>
+                    <div class="card-body">
+                        <p>
+                            投稿日時：{{ new.posted_at | date:'Y/m/d'}}
+                            <!--{% if new.posted_at|is_new %}
+                                <span class="newJudge">
+                                    NEW
+                                </span>
+                            {% endif %}-->
+                        </p>
+                        <div class="">{{ new.title }}</div>
+                        <a href="#"><p class="card-text text_limit">{{new.content}}</p></a>
+                        <button class="card-link btn btn-dark" onclick="limit2Cate('{{new.category}}')">{{new.category}}</button>
+                        <button class="card-link btn btn-dark" onclick="limit2Place('{{ new.place }}')">{{ new.place }}</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
+    </section>
     <section class="work-section" id="work">
         <header class="section-header">
             <div class="inner clearfix">
