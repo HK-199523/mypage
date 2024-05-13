@@ -4,15 +4,31 @@ FROM python:3.8
 # 環境変数を設定
 ENV PYTHONUNBUFFERED 1
 
-# ワークディレクトリを作成
-RUN mkdir /code
+# Node.js のインストール
+RUN apt-get update
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs npm
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
-# ワークディレクトリを指定
+# Node.jsに対するメモリ制限の設定
+ENV NODE_OPTIONS=--max-old-space-size=4096
+
+# ワークディレクトリを作成
 WORKDIR /code
 
-# requirements.txtをコピーし、パッケージをインストール
-COPY requirements.txt /code/
+# 依存関係ファイルを先にコピー
+COPY requirements.txt package*.json /code/
+
+# PythonとNodeのパッケージをインストール
 RUN pip install -r requirements.txt
+RUN npm install
 
 # プロジェクトファイルをコピー
 COPY . /code/
+
+
+
+# Tailwind CSS をビルド
+RUN npm run build-css

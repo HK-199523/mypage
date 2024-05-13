@@ -1,0 +1,11 @@
+{
+    "scripts": {
+      "build-css": "npx tailwindcss -i ./top_page/static/css/input.css -o ./top_page/static/css/styles.css --watch --poll"
+    },
+    "dependencies": {
+      "tailwindcss": "^3.4.3",
+      "postcss": "^8.0.0",
+      "autoprefixer": "^10.0.0"
+    }
+  }
+  
