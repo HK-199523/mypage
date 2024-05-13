@@ -10,8 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
+
 import os
+import time
+from pathlib import Path
+from django.db import connections
+#from django.db.utils import OperationalError
+#from django.core.management.base import CommandError
+#from django.core.management.commands import runserver
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,6 +94,7 @@ DATABASES = {
             'charset': 'utf8mb4',
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
+        'CONN_MAX_AGE': 20,
     }
 }
 
@@ -134,3 +141,30 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# myapp/settings.py
+
+
+
+'''
+class Command(runserver.Command):
+    def inner_run(self, *args, **options):
+        max_retries = 5 #リトライ最大回数
+        retries = 0
+
+        while retries < max_retries:
+            try:
+                connections.ensure_defaults()
+                connections.ensure_connection()
+                break
+            except OperationalError as e:
+                if retries >= max_retries - 1:
+                    raise CommandError("Database connection failed: %s" % e)
+                self.stdout.write("Database connection failed: %s" % e)
+                self.stdout.write("Retrying in 5 seconds...")
+                time.sleep(10) #リトライ間隔
+                retries += 1
+
+        return super().inner_run(*args, **options)
+'''

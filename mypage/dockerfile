@@ -28,7 +28,9 @@ RUN npm install
 # プロジェクトファイルをコピー
 COPY . /code/
 
-
-
 # Tailwind CSS をビルド
 RUN npm run build-css
+
+# docker-compose-waitスクリプトをコピー
+COPY docker-compose-wait /usr/local/bin/docker-compose-wait
+RUN chmod +x /code/docker-compose-wait

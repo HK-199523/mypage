@@ -19,10 +19,14 @@ services:
   web:
     container_name: web_container
     build: ./mypage
-    command: python manage.py runserver 0.0.0.0:8080
+    command: >
+      bash -c "./docker-compose-wait mysql_db:3306 &&
+      python manage.py runserver 0.0.0.0:8080"
     volumes:
       - ./mypage:/code
     ports:
       - '8080:8080'
     depends_on:
       - mysql_db
+    environment:
+      WAIT_HOSTS: mysql_db:3306
