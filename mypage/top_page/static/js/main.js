@@ -219,6 +219,7 @@ $(function () {
     });
 
     // Google Maps
+    /*
     function initMap () {
         var mapContainer = document.getElementById('map-container'),
             mapImageSrc = mapContainer.getElementsByTagName('img')[0].getAttribute('src'),
@@ -279,5 +280,5 @@ $(function () {
     }
 
     initMap();
-
+    */
 });

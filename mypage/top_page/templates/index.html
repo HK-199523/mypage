@@ -17,6 +17,7 @@
 <script src={% static "js/vendor/jquery.ba-throttle-debounce.min.js"%}></script>
 <script src={% static "js/vendor/jquery.smooth-scroll.min.js"%}></script>
 <script src={% static "js/main.js"%}></script>
+<script src={% static "js/addjs.js"%}></script>
 </head>
 <body>
 
@@ -58,50 +59,18 @@
 
     <section class="topics-section" id="topics">
         <div class="inner">
-            <h2>Topics</h2>
-            <ul class="topics-list clearfix">
-                <li>
-                    <a href="#">
-                        <span class="image-wrapper">
-                            <img class="image" src={% static "img/topic-1.jpg"%} alt="" height="230" width="304">
-                        </span>
-                        <b class="title">近日　実装予定　１</b>
-                        <time class="date" datetime="2013-05-16">2013/05/16</time>
-                        <p class="description">実装まで少々お待ちください。</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="./">
-                        <span class="image-wrapper">
-                            <img class="image" src={% static "img/topic-2.jpg"%} alt="" height="230" width="304">
-                        </span>
-                        <b class="title">近日　実装予定　２</b>
-                        <time class="date" datetime="2013-05-01">2013/05/01</time>
-                        <p class="description">実装まで少々お待ちください。</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="./">
-                        <span class="image-wrapper">
-                            <img class="image" src={% static "img/topic-3.jpg"%} alt="" height="230" width="304">
-                        </span>
-                        <b class="title">近日　実装予定　３</b>
-                        <time class="date" datetime="2013-04-01">2013/04/01</time>
-                        <p class="description">実装まで少々お待ちください。</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="inner">
+            <div class="animate-tracking-in-expand text-3xl mb-2 font-medium">Recently News</div>
             <div id="newsBody" class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4">
                 {% for new in news %}
                     <div class="p-1" style="border:none;">
-                        <a href="#" class="Image mb-2"><img src="{{ new.image1.url }}"  alt="No Image"></a>
+                        <a href="#" class="Image mb-2 h-screen overflow-hidden">
+                            <img src="{{ new.image1.url }}" class="h-32 object-cover" alt="No Image">
+                        </a>
                         <div class="card-body">
                             <p>
                                 投稿日時：{{ new.posted_at | date:'Y/m/d'}}
                                 {% if new.posted_at|is_new %}
-                                    <span class="newJudge h-5 bg-red-600 text-white rounded m-2 pr-2 pl-2">
+                                    <span class="newJudge h-5 bg-red-600 text-white rounded m-1 pr-2 pl-2">
                                         NEW
                                     </span>
                                 {% endif %}

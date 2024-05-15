@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'top_page.apps.TopPageConfig',
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [

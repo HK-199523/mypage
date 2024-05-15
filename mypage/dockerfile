@@ -23,7 +23,7 @@ COPY requirements.txt package*.json /code/
 
 # PythonとNodeのパッケージをインストール
 RUN pip install -r requirements.txt
-RUN npm install
+RUN npm install tailwindcss@^3.4.3
 
 # プロジェクトファイルをコピー
 COPY . /code/
@@ -32,5 +32,5 @@ COPY . /code/
 RUN npm run build-css
 
 # docker-compose-waitスクリプトをコピー
-COPY docker-compose-wait /usr/local/bin/docker-compose-wait
-RUN chmod +x /code/docker-compose-wait
+#COPY docker-compose-wait /usr/local/bin/docker-compose-wait
+#RUN chmod +x docker-compose-wait
