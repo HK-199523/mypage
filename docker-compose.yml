@@ -21,11 +21,11 @@ services:
     build: ./mypage
     command: >
       bash -c "./docker-compose-wait mysql_db:3306 &&
-      python manage.py runserver 0.0.0.0:8080"
+      python manage.py runserver 0.0.0.0:80"
     volumes:
       - ./mypage:/code
     ports:
-      - '8080:8080'
+      - '80:80'
     depends_on:
       - mysql_db
     environment:
